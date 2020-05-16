@@ -1,0 +1,8 @@
+insert 8 Haxion_Brood_Bounty_Hunter 4000 2000 400 false combi_plasma_gun power_blade chapter_5 5 Fallen_Order
+insert 1 BD-1 10 5 300 true plasma_gun chain_sword chapter_1 1 Fallen_Order
+insert 5 Jaro_Tapal 2000 1399 1000 true combi_plasma_gun chain_sword chapter_4 1 Fallen_Order
+insert 2 Cal_Kestis 1 1 600 true plasma_gun chain_sword chapter_1 1 Fallen_Order
+insert 4 Greez_Dritus 1200 600 650 true flamer chain_axe chapter_3 1 Fallen_Order
+insert 3 Cere_Junda 1000 50 500 true inferno_pistol power_blade chapter_2 1 Fallen_Order
+insert 6 Haxion_Brood_Commando 4000 2000 600 false plasma_gun chain_sword chapter_5 10 Fallen_Order
+insert 7 Haxion_Brood 4000 2000 200 false plasma_gun chain_axe chapter_5 50 Fallen_Order

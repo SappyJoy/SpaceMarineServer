@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="SpaceMarineServer:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/SpaceMarineServer_jar</output-path>
+    <root id="archive" name="SpaceMarineServer.jar">
+      <element id="module-output" name="SpaceMarineServer" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/json-20190722.jar" path-in-jar="/" />
+      <element id="file-copy" path="$PROJECT_DIR$/data.json" />
+    </root>
+  </artifact>
+</component>
