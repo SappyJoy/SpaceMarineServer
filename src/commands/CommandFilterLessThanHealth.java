@@ -25,7 +25,7 @@ public class CommandFilterLessThanHealth extends Command {
 
     public CommandFilterLessThanHealth() {
         this.name = "filter_less_than_health";
-        this.description = "Displays elements whose health field value is less than the specified";
+        this.description = "Syntax: <float number> Displays elements whose health field value is less than the specified";
     }
 
     @Override
@@ -34,12 +34,16 @@ public class CommandFilterLessThanHealth extends Command {
                 .filter(a -> a.getHealth() < health)
                 .map(a -> a.toString() + "\n")
                 .collect(Collectors.joining());
+        if (s.equals("")) {
+            return "There is no such elements";
+        }
         return s;
     }
 
     @Override
     public void readParameters(Scanner sc, ObjectOutputStream oos) throws IOException {
-        oos.writeObject(new ValidateInput(sc).validateFloat());
+        health = sc.nextFloat();
+        oos.writeObject(health);
     }
 
     @Override

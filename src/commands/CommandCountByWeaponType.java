@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 /**
- * SpaceMarine.commands.Command that displays the number of elements whose weaponType field value is equal to the specified
+ * SpaceMarine.Command that displays the number of elements whose weaponType field value is equal to the specified
  */
 public class CommandCountByWeaponType extends Command {
 
@@ -30,17 +30,19 @@ public class CommandCountByWeaponType extends Command {
 
     @Override
     public String execute() {
-        long ans = lhm.values().stream()
-                .filter(s -> s.getWeaponType()
-                .equals(weaponType))
-                .count();
+        int ans = 0;
+        for (SpaceMarine spaceMarine : lhm.values()) {
+            if (spaceMarine.getWeaponType().equals(weaponType)) {
+                ans++;
+            }
+        }
         return (ans + " weapon of type " + weaponType);
     }
 
     @Override
     public void readParameters(Scanner sc, ObjectOutputStream oos) throws IOException {
         ValidateInput vi = new ValidateInput(sc);
-        weaponType = vi.validateWeapon();
+        weaponType = Weapon.valueOf(name.toUpperCase());
         oos.writeObject(weaponType);
     }
 

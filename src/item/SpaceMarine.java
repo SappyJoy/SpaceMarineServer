@@ -4,6 +4,7 @@ import utils.ValidateInput;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -99,20 +100,20 @@ public class SpaceMarine implements Cloneable, Comparable<SpaceMarine>, Serializ
      * Scans element from input stream with invitation to enter
      * @param sc
      */
-    public void scan(Scanner sc) {
+    public void scan(Scanner sc) throws NoSuchElementException {
         ValidateInput in = new ValidateInput(sc);
 
         name = sc.next();
         id = ++curId;
-        long x = in.validateLong();
-        long y = in.validateLong();
+        long x = sc.nextLong();
+        long y = sc.nextLong();
         coordinates = new Coordinates(x, y);
-        health = in.validateFloat();
-        loyal = in.validateBool();
-        weaponType = in.validateWeapon();
-        meleeWeapon = in.validateMeleeWeapon();
+        health = sc.nextFloat();
+        loyal = sc.nextBoolean();
+        weaponType = Weapon.valueOf(sc.next().toUpperCase());
+        meleeWeapon = MeleeWeapon.valueOf(sc.next().toUpperCase());
         String nameChapter = sc.next();
-        int count = in.validatePositiveInt();
+        int count = sc.nextInt();
         String nameWorld = sc.next();
         chapter = new Chapter(nameChapter, count, nameWorld);
     }

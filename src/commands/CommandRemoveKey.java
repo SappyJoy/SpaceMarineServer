@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 /**
- * SpaceMarine.commands.Command which removes an item from the collection by its key
+ * SpaceMarine.Command which removes an item from the collection by its key
  */
 public class CommandRemoveKey extends Command {
     /**
@@ -25,7 +25,7 @@ public class CommandRemoveKey extends Command {
     }
 
     public CommandRemoveKey() {
-        this.name = "remove_key key";
+        this.name = "remove_key";
         this.description = "Removes an item from the collection by its key";
     }
 
@@ -42,7 +42,8 @@ public class CommandRemoveKey extends Command {
 
     @Override
     public void readParameters(Scanner sc, ObjectOutputStream oos) throws IOException {
-        oos.writeObject(new ValidateInput(sc).validateInt());
+        removeKey = sc.nextInt();
+        oos.writeObject(removeKey);
     }
 
     @Override

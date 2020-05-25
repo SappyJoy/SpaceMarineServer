@@ -35,7 +35,7 @@ public class CommandUpdate extends Command {
             SpaceMarine value = lhm.get(key);
             if (value.getId() == id) {
                 lhm.put(key, sm);
-                return "";
+                return "Success update";
             }
         }
         return ("Not found any elements with the given id\n");
@@ -43,7 +43,7 @@ public class CommandUpdate extends Command {
 
     @Override
     public void readParameters(Scanner sc, ObjectOutputStream oos) throws IOException {
-        int id = new ValidateInput(sc).validateInt();
+        int id = sc.nextInt();
         SpaceMarine sm = new SpaceMarine();
         sm.scan(sc);
         sm.setId(id);

@@ -2,6 +2,7 @@ package server;
 
 import commands.CommandManager;
 
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class ServerConsoleThread extends Thread {
@@ -15,7 +16,12 @@ public class ServerConsoleThread extends Thread {
 
     public void run() {
         while (true) {
-            String msg = sc.nextLine();
+            String msg = null;
+            try {
+                msg = sc.nextLine();
+            } catch (NoSuchElementException e) {
+                System.exit(0);
+            }
             if (msg.equals("exit")) {
                 System.out.println("Saving..");
                 commandManager.getCommand("save").execute();

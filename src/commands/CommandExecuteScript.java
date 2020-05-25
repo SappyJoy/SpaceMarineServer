@@ -38,7 +38,7 @@ public class CommandExecuteScript extends Command {
         try {
             fileInputStream = new FileInputStream(fileName);
         } catch (FileNotFoundException e) {
-            return ("File not found");
+            return ("Syntax: java CommandExecuteScript <filename> | <relative path>");
         }
         Scanner in = new Scanner(new InputStreamReader(fileInputStream));
         // Создать новый файл, если имя файла указано некорректно запросить повторить ввод
@@ -55,7 +55,13 @@ public class CommandExecuteScript extends Command {
                     continue;
                 }
             }
+
+            if (name.equals(""))
+                break;
+
             Command cmd = commandManager.getCommand(name);
+            if (cmd == null)
+                continue;
 
             try {
                 byte[] output = new byte[10000];
@@ -76,8 +82,9 @@ public class CommandExecuteScript extends Command {
                 ByteArrayInputStream bais = new ByteArrayInputStream(output);
                 ObjectInputStream ois = new ObjectInputStream(bais);
                 cmd.setParameters(ois);
-            } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
+            } catch (IOException | ClassNotFoundException | IllegalArgumentException | NoSuchElementException e) {
+                result += "Wrong command\n";
+                continue;
             }
 
             result += cmd.execute();

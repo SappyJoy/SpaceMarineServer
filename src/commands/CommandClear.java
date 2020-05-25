@@ -24,8 +24,9 @@ public class CommandClear extends Command {
 
     @Override
     public String execute() {
+        int count = lhm.size();
         lhm.clear();
-        return "";
+        return count + " items were deleted";
     }
 
     @Override

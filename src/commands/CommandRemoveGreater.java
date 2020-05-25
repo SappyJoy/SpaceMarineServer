@@ -34,7 +34,7 @@ public class CommandRemoveGreater extends Command {
                 .collect(Collectors.toMap((p) -> p.getKey(), (p) -> p.getValue()));
         lhm.clear();
         lhm.putAll(copy);
-        return "";
+        return "Removed";
     }
 
     @Override

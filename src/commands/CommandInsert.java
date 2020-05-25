@@ -37,7 +37,8 @@ public class CommandInsert extends Command {
     public void readParameters(Scanner sc, ObjectOutputStream oos) throws IOException {
         // System.out.print("Input a key: ");
         ValidateInput in = new ValidateInput(sc);
-        int key = in.validateInt();
+        // int key = in.validateInt();
+        key = sc.nextInt();
         SpaceMarine sm = new SpaceMarine();
         sm.scan(sc);
         oos.writeObject(key);
