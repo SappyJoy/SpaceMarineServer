@@ -1,11 +1,29 @@
-{"array":[{"key":1,"SpaceMarine":{
-	"id":10, 
+{"array":[{"key":8,"SpaceMarine":{
+	"id":5, 
+	"name":"Haxion_Brood_Bounty_Hunter", 
+	"coordinates":{
+		"x":4000, 
+		"y":2000
+	}, 
+	"creationDate":"2020-05-25T23:32:51.286", 
+	"health":400.0, 
+	"loyal":false, 
+	"weaponType":"COMBI_PLASMA_GUN", 
+	"meleeWeapon":"POWER_BLADE", 
+	"chapter":{
+		"name":"chapter_5", 
+		"marinesCount":5, 
+		"world":"Fallen_Order"
+	}
+}},
+{"key":1,"SpaceMarine":{
+	"id":6, 
 	"name":"BD-1", 
 	"coordinates":{
 		"x":10, 
 		"y":5
 	}, 
-	"creationDate":"2020-04-25T10:50:27.400", 
+	"creationDate":"2020-05-25T23:32:51.291", 
 	"health":300.0, 
 	"loyal":true, 
 	"weaponType":"PLASMA_GUN", 
@@ -16,14 +34,32 @@
 		"world":"Fallen_Order"
 	}
 }},
+{"key":5,"SpaceMarine":{
+	"id":7, 
+	"name":"Jaro_Tapal", 
+	"coordinates":{
+		"x":2000, 
+		"y":1399
+	}, 
+	"creationDate":"2020-05-25T23:32:51.291", 
+	"health":1000.0, 
+	"loyal":true, 
+	"weaponType":"COMBI_PLASMA_GUN", 
+	"meleeWeapon":"CHAIN_SWORD", 
+	"chapter":{
+		"name":"chapter_4", 
+		"marinesCount":1, 
+		"world":"Fallen_Order"
+	}
+}},
 {"key":2,"SpaceMarine":{
-	"id":12, 
+	"id":8, 
 	"name":"Cal_Kestis", 
 	"coordinates":{
 		"x":1, 
 		"y":1
 	}, 
-	"creationDate":"2020-04-25T10:50:27.403", 
+	"creationDate":"2020-05-25T23:32:51.292", 
 	"health":600.0, 
 	"loyal":true, 
 	"weaponType":"PLASMA_GUN", 
@@ -34,32 +70,14 @@
 		"world":"Fallen_Order"
 	}
 }},
-{"key":3,"SpaceMarine":{
-	"id":14, 
-	"name":"Cere_Junda", 
-	"coordinates":{
-		"x":1000, 
-		"y":50
-	}, 
-	"creationDate":"2020-04-25T10:50:27.406", 
-	"health":500.0, 
-	"loyal":true, 
-	"weaponType":"INFERNO_PISTOL", 
-	"meleeWeapon":"POWER_BLADE", 
-	"chapter":{
-		"name":"chapter_2", 
-		"marinesCount":1, 
-		"world":"Fallen_Order"
-	}
-}},
 {"key":4,"SpaceMarine":{
-	"id":13, 
+	"id":9, 
 	"name":"Greez_Dritus", 
 	"coordinates":{
 		"x":1200, 
 		"y":600
 	}, 
-	"creationDate":"2020-04-25T10:50:27.404", 
+	"creationDate":"2020-05-25T23:32:51.293", 
 	"health":650.0, 
 	"loyal":true, 
 	"weaponType":"FLAMER", 
@@ -70,14 +88,32 @@
 		"world":"Fallen_Order"
 	}
 }},
+{"key":3,"SpaceMarine":{
+	"id":10, 
+	"name":"Cere_Junda", 
+	"coordinates":{
+		"x":1000, 
+		"y":50
+	}, 
+	"creationDate":"2020-05-25T23:32:51.294", 
+	"health":500.0, 
+	"loyal":true, 
+	"weaponType":"INFERNO_PISTOL", 
+	"meleeWeapon":"POWER_BLADE", 
+	"chapter":{
+		"name":"chapter_2", 
+		"marinesCount":1, 
+		"world":"Fallen_Order"
+	}
+}},
 {"key":6,"SpaceMarine":{
-	"id":15, 
+	"id":11, 
 	"name":"Haxion_Brood_Commando", 
 	"coordinates":{
 		"x":4000, 
 		"y":2000
 	}, 
-	"creationDate":"2020-04-25T10:50:27.407", 
+	"creationDate":"2020-05-25T23:32:51.295", 
 	"health":600.0, 
 	"loyal":false, 
 	"weaponType":"PLASMA_GUN", 
@@ -89,13 +125,13 @@
 	}
 }},
 {"key":7,"SpaceMarine":{
-	"id":16, 
+	"id":12, 
 	"name":"Haxion_Brood", 
 	"coordinates":{
 		"x":4000, 
 		"y":2000
 	}, 
-	"creationDate":"2020-04-25T10:50:27.408", 
+	"creationDate":"2020-05-25T23:32:51.296", 
 	"health":200.0, 
 	"loyal":false, 
 	"weaponType":"PLASMA_GUN", 
@@ -104,41 +140,5 @@
 		"name":"chapter_5", 
 		"marinesCount":50, 
 		"world":"Fallen_Order"
-	}
-}},
-{"key":8,"SpaceMarine":{
-	"id":9, 
-	"name":"Haxion_Brood_Bounty_Hunter", 
-	"coordinates":{
-		"x":4000, 
-		"y":2000
-	}, 
-	"creationDate":"2020-04-25T10:50:27.389", 
-	"health":400.0, 
-	"loyal":false, 
-	"weaponType":"COMBI_PLASMA_GUN", 
-	"meleeWeapon":"POWER_BLADE", 
-	"chapter":{
-		"name":"chapter_5", 
-		"marinesCount":5, 
-		"world":"Fallen_Order"
-	}
-}},
-{"key":76,"SpaceMarine":{
-	"id":1, 
-	"name":"sugar", 
-	"coordinates":{
-		"x":3, 
-		"y":4
-	}, 
-	"creationDate":"2020-05-07T12:20:25.448", 
-	"health":800.0, 
-	"loyal":true, 
-	"weaponType":"PLASMA_GUN", 
-	"meleeWeapon":"CHAIN_SWORD", 
-	"chapter":{
-		"name":"hower", 
-		"marinesCount":80, 
-		"world":"yammy"
 	}
 }}]}

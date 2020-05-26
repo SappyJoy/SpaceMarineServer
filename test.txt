@@ -1,4 +1,6 @@
-help
-info
-show
-add
+remove_key 28
+history
+count_by_weapon_type plasma_gun
+filter_less_than_health 400
+print_field_ascending_chapter
+clear

@@ -35,7 +35,7 @@ public class CommandFilterLessThanHealth extends Command {
                 .map(a -> a.toString() + "\n")
                 .collect(Collectors.joining());
         if (s.equals("")) {
-            return "There is no such elements";
+            return "There is no such elements\n";
         }
         return s;
     }

@@ -30,6 +30,8 @@ public class CommandHistory extends Command {
                 .stream()
                 .map(a -> a + "\n")
                 .collect(Collectors.joining());
+        if (s.equals(""))
+            return "History is empty\n";
         return s;
     }
 

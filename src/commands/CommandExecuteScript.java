@@ -79,6 +79,10 @@ public class CommandExecuteScript extends Command {
                     }
                 }
 
+                if (name.equals("save")) {
+                    throw new IOException();
+                }
+
                 ByteArrayInputStream bais = new ByteArrayInputStream(output);
                 ObjectInputStream ois = new ObjectInputStream(bais);
                 cmd.setParameters(ois);

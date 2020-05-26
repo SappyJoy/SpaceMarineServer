@@ -31,6 +31,8 @@ public class CommandPrintFieldAscendingChapter extends Command {
                 .sorted((t1, t2) -> t1.getChapter().compareTo(t2.getChapter()))
                 .map(t -> t.getChapter().toString() + "\n")
                 .collect(Collectors.joining());
+        if (s.equals(""))
+            return "Collection is empty\n";
         return s;
     }
 

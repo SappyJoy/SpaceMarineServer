@@ -36,13 +36,12 @@ public class CommandCountByWeaponType extends Command {
                 ans++;
             }
         }
-        return (ans + " weapon of type " + weaponType);
+        return (ans + " weapon of type " + weaponType + "\n");
     }
 
     @Override
     public void readParameters(Scanner sc, ObjectOutputStream oos) throws IOException {
-        ValidateInput vi = new ValidateInput(sc);
-        weaponType = Weapon.valueOf(name.toUpperCase());
+        weaponType = Weapon.valueOf(sc.next().toUpperCase());
         oos.writeObject(weaponType);
     }
 

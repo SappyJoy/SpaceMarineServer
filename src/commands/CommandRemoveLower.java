@@ -34,7 +34,7 @@ public class CommandRemoveLower extends Command {
                 .collect(Collectors.toMap((p) -> p.getKey(), (p) -> p.getValue()));
         lhm.clear();
         lhm.putAll(copy);
-        return "Removed";
+        return "Removed\n";
     }
 
     @Override

@@ -47,7 +47,7 @@ public class CommandUpdate extends Command {
         SpaceMarine sm = new SpaceMarine();
         sm.scan(sc);
         sm.setId(id);
-        oos.writeObject(id);
+        oos.writeInt(id);
         oos.writeObject(sm);
     }
 

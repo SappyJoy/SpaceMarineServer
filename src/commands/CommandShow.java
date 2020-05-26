@@ -28,7 +28,7 @@ public class CommandShow extends Command {
     @Override
     public String execute() {
         if (lhm.size() == 0) {
-            return "Collection is empty";
+            return "Collection is empty\n";
         }
         String s = lhm.values().stream()
                 .sorted(Comparator.comparing(SpaceMarine::getName))
