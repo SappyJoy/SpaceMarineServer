@@ -41,8 +41,10 @@ public class CommandExecuteScript extends Command {
             return ("Syntax: java CommandExecuteScript <filename> | <relative path>");
         }
         Scanner in = new Scanner(new InputStreamReader(fileInputStream));
+        int i = 0;
         // Создать новый файл, если имя файла указано некорректно запросить повторить ввод
         while (in.hasNextLine()) {
+            i++;
             // !!!!! Если присутствует комманда execute_script, проверить не ссылается ли она на тот же файл
             String name = "";
             while (in.hasNextLine()) {
@@ -87,7 +89,7 @@ public class CommandExecuteScript extends Command {
                 ObjectInputStream ois = new ObjectInputStream(bais);
                 cmd.setParameters(ois);
             } catch (IOException | ClassNotFoundException | IllegalArgumentException | NoSuchElementException e) {
-                result += "Wrong command\n";
+                result += "Wrong command (" + name + ")\n";
                 continue;
             }
 

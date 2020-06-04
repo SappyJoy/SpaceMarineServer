@@ -30,12 +30,13 @@ public class CommandCountByWeaponType extends Command {
 
     @Override
     public String execute() {
-        int ans = 0;
-        for (SpaceMarine spaceMarine : lhm.values()) {
-            if (spaceMarine.getWeaponType().equals(weaponType)) {
-                ans++;
-            }
-        }
+        long ans = 0;
+        ans = lhm.values().stream().filter(x -> x.getWeaponType().equals(weaponType)).count();
+//        for (SpaceMarine spaceMarine : lhm.values()) {
+//            if (spaceMarine.getWeaponType().equals(weaponType)) {
+//                ans++;
+//            }
+//        }
         return (ans + " weapon of type " + weaponType + "\n");
     }
 
