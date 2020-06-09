@@ -30,10 +30,16 @@ public class CommandFilterLessThanHealth extends Command {
 
     @Override
     public String execute() {
-        String s = lhm.values().stream()
-                .filter(a -> a.getHealth() < health)
-                .map(a -> a.toString() + "\n")
-                .collect(Collectors.joining());
+        lock.readLock().lock();
+        String s;
+        try {
+            s = lhm.values().stream()
+                    .filter(a -> a.getHealth() < health)
+                    .map(a -> a.toString() + "\n")
+                    .collect(Collectors.joining());
+        } finally {
+            lock.readLock().unlock();
+        }
         if (s.equals("")) {
             return "There is no such elements\n";
         }

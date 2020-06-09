@@ -2,6 +2,9 @@ package commands;
 
 import item.SpaceMarine;
 import utils.ValidateInput;
+import utils.dao.SpaceMarineDAO;
+import utils.dataSource.database.Database;
+import utils.dataSource.database.UserDatabase;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -28,7 +31,17 @@ public class CommandInsert extends Command {
 
     @Override
     public String execute() {
-        lhm.put(key, sm);
+        if (lhm.containsKey(key)) {
+            return String.format("Item with key %d already exists\n", key);
+        }
+        sm.setOwnerId(user.getId());
+        lock.writeLock().lock();
+        try {
+            lhm.put(key, sm);
+        } finally {
+            lock.writeLock().unlock();
+        }
+        new SpaceMarineDAO(UserDatabase.getInstance()).insert(key, sm);
         String result = String.format("Element with key %d has been inserted\n", key);
         return result;
     }

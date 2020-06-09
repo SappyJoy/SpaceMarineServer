@@ -27,10 +27,16 @@ public class CommandPrintFieldAscendingChapter extends Command {
 
     @Override
     public String execute() {
-        String s = lhm.values().stream()
-                .sorted((t1, t2) -> t1.getChapter().compareTo(t2.getChapter()))
-                .map(t -> t.getChapter().toString() + "\n")
-                .collect(Collectors.joining());
+        lock.readLock().lock();
+        String s;
+        try {
+            s = lhm.values().stream()
+                    .sorted((t1, t2) -> t1.getChapter().compareTo(t2.getChapter()))
+                    .map(t -> t.getChapter().toString() + "\n")
+                    .collect(Collectors.joining());
+        } finally {
+            lock.readLock().unlock();
+        }
         if (s.equals(""))
             return "Collection is empty\n";
         return s;

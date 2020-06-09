@@ -2,6 +2,8 @@ package commands;
 
 import item.SpaceMarine;
 import utils.ValidateInput;
+import utils.dao.SpaceMarineDAO;
+import utils.dataSource.database.UserDatabase;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -31,9 +33,17 @@ public class CommandRemoveKey extends Command {
 
     @Override
     public String execute() {
+        SpaceMarineDAO dao = new SpaceMarineDAO(UserDatabase.getInstance());
+
         for (Integer key : lhm.keySet()) {
             if (key.equals(removeKey)) {
-                lhm.remove(removeKey);
+                dao.delete(lhm.get(removeKey));
+                lock.writeLock().lock();
+                try {
+                    lhm.remove(removeKey);
+                } finally {
+                    lock.writeLock().unlock();
+                }
                 return ("Element has been removed\n");
             }
         }

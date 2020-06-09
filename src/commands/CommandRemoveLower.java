@@ -1,6 +1,9 @@
 package commands;
 
 import item.SpaceMarine;
+import utils.dao.SpaceMarineDAO;
+import utils.dao.UserDAO;
+import utils.dataSource.database.UserDatabase;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -29,12 +32,25 @@ public class CommandRemoveLower extends Command {
 
     @Override
     public String execute() {
+        int count = lhm.size();
+        SpaceMarineDAO dao = new SpaceMarineDAO(UserDatabase.getInstance());
+
         Map<Integer, SpaceMarine> copy = lhm.entrySet().stream()
-                .filter(s -> s.getValue().compareTo(spaceMarine) >= 0)
+                .filter(s -> ((s.getValue().compareTo(spaceMarine)) >= 0 ||
+                        (s.getValue().getOwnerId() != new UserDAO(UserDatabase.getInstance()).getByLogin(user.getLogin()).getId())))
                 .collect(Collectors.toMap((p) -> p.getKey(), (p) -> p.getValue()));
-        lhm.clear();
-        lhm.putAll(copy);
-        return "Removed\n";
+        lhm.entrySet().stream()
+                .filter(s -> ((s.getValue().compareTo(spaceMarine)) < 0 &&
+                        (s.getValue().getOwnerId() == new UserDAO(UserDatabase.getInstance()).getByLogin(user.getLogin()).getId())))
+                .forEach(s -> dao.delete(s.getValue()));
+        lock.writeLock().lock();
+        try {
+            lhm.clear();
+            lhm.putAll(copy);
+        } finally {
+            lock.writeLock().unlock();
+        }
+        return "Removed " + (count - lhm.size()) + " items\n";
     }
 
     @Override

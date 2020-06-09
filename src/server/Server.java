@@ -2,6 +2,11 @@ package server;
 
 import commands.Command;
 import commands.CommandManager;
+import user.User;
+import utils.ValidateUser;
+import utils.dao.UserDAO;
+import utils.dataSource.database.Database;
+import utils.dataSource.database.UserDatabase;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -11,6 +16,9 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.nio.ByteBuffer;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.stream.Stream;
 
 public class Server {
     private int port;
@@ -19,11 +27,19 @@ public class Server {
     private List<String> history;
     private InetAddress clientAddr;
     private int clientPort;
+    private Database database;
 
-    public Server(int port, CommandManager commandManager, List<String> history) {
+    private final ExecutorService receiveExecutorService;
+    private final ExecutorService sendExecutorService;
+
+    public Server(int port, CommandManager commandManager, List<String> history, Database database) {
+        receiveExecutorService = Executors.newCachedThreadPool();
+        sendExecutorService = Executors.newFixedThreadPool(3);
+
         this.port = port;
         this.commandManager = commandManager;
         this.history = history;
+        this.database = database;
     }
 
     public void execute() {
@@ -52,29 +68,47 @@ public class Server {
             e.printStackTrace();
         }
 
-        clientAddr = inputPacket.getAddress();
-        clientPort = inputPacket.getPort();
+        receiveExecutorService.execute(() -> {
+            clientAddr = inputPacket.getAddress();
+            clientPort = inputPacket.getPort();
+        });
 
-        process(input);
+        new Thread(() -> process(input)).start();
     }
 
     private void process(byte[] input) {
         try {
             ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(input);
             ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
-            Command cmd = (Command) objectInputStream.readObject();
-            cmd = commandManager.getCommand(cmd.getName());
-            cmd.setParameters(objectInputStream);
-            System.out.println("Request has been received: " + cmd.getName());
-
+            User user = (User) objectInputStream.readObject();
+            String answer = "";
+            if (user.isRegistered()) {
+                boolean checkUser = ValidateUser.checkUser(user, database);
+                if (checkUser) {
+                    if (!user.isEntry()) {
+                        user.setId(new UserDAO(UserDatabase.getInstance()).getByLogin(user.getLogin()).getId());
+                        Command cmd = (Command) objectInputStream.readObject();
+                        cmd = commandManager.getCommand(cmd.getName());
+                        cmd.setUser(user);
+                        cmd.setParameters(objectInputStream);
+                        System.out.println("Request has been received: " + cmd.getName());
+                        answer += cmd.execute();
+                        history.add(cmd.getName());
+                    }
+                } else {
+                    answer = "Wrong login or password";
+                }
+            } else {
+                answer = ValidateUser.register(user, database);
+            }
             byte[] output = new byte[10000];
-            String answer = cmd.execute();
             ByteBuffer buffer = ByteBuffer.wrap(answer.getBytes("UTF-8"));
             output = answer.getBytes("UTF-8");
-            history.add(cmd.getName());
+
 
 //            send(output);
-            send(buffer.array());
+
+            sendExecutorService.execute(() -> send(buffer.array()));
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Error in the server process: " + e.getMessage());
             e.printStackTrace();

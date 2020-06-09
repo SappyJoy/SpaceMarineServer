@@ -1,7 +1,12 @@
 import commands.*;
 import item.SpaceMarine;
 import server.Server;
+import utils.MyDatabase;
+import utils.SendMail;
 import utils.WorkWithJson;
+import utils.dao.SpaceMarineDAO;
+import utils.dataSource.database.Database;
+import utils.dataSource.database.UserDatabase;
 
 import java.io.*;
 import java.util.*;
@@ -20,30 +25,32 @@ public class Main {
 
         int port = Integer.parseInt(args[0]);
 
-        File file = new File("data.json");
-
+//        File file = new File("data.json");
+        Database database = UserDatabase.getInstance();
+        SpaceMarineDAO spaceMarineDAO = new SpaceMarineDAO(database);
         LinkedHashMap<Integer, SpaceMarine> lhm;
         // добавить элементы из файла в lhm
-        WorkWithJson workWIthJson = new WorkWithJson(file);
-        lhm = workWIthJson.getLhm();
+//        WorkWithJson workWIthJson = new WorkWithJson(file);
+//        lhm = workWIthJson.getLhm();
+        lhm = (LinkedHashMap<Integer, SpaceMarine>) spaceMarineDAO.getAll();
+        SendMail.getInstance();
 
         List<String> history = new LinkedList<>();
         CommandManager commandManager = new CommandManager();
-        addCommands(commandManager, lhm, file, history);
+        addCommands(commandManager, lhm, history);
 
-        Server server = new Server(port, commandManager, history);
-        server.execute();
+        new Server(port, commandManager, history, database).execute();
     }
 
 
-    private static void addCommands(CommandManager commandManager, LinkedHashMap<Integer, SpaceMarine> lhm, File file,
+    private static void addCommands(CommandManager commandManager, LinkedHashMap<Integer, SpaceMarine> lhm,
                                     List<String> history) {
         commandManager.addCommand("insert", new CommandInsert(lhm));
         commandManager.addCommand("show", new CommandShow(lhm));
         commandManager.addCommand("update", new CommandUpdate(lhm));
         commandManager.addCommand("remove_key", new CommandRemoveKey(lhm));
         commandManager.addCommand("clear", new CommandClear(lhm));
-        commandManager.addCommand("save", new CommandSave(lhm, file));
+        commandManager.addCommand("save", new CommandSave(lhm));
         commandManager.addCommand("exit", new CommandExit());
         commandManager.addCommand("remove_greater", new CommandRemoveGreater(lhm));
         commandManager.addCommand("remove_lower", new CommandRemoveLower(lhm));

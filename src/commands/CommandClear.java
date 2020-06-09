@@ -1,11 +1,16 @@
 package commands;
 
 import item.SpaceMarine;
+import utils.dao.SpaceMarineDAO;
+import utils.dao.UserDAO;
+import utils.dataSource.database.UserDatabase;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 /**
  * SpaceMarine.commands.Command which clear all collection
@@ -25,8 +30,28 @@ public class CommandClear extends Command {
     @Override
     public String execute() {
         int count = lhm.size();
-        lhm.clear();
-        return count + " items were deleted";
+        SpaceMarineDAO dao = new SpaceMarineDAO(UserDatabase.getInstance());
+
+        Map<Integer, SpaceMarine> copy = null;
+        lock.readLock().lock();
+        try {
+            copy = lhm.entrySet().stream()
+                    .filter(s -> s.getValue().getOwnerId() != new UserDAO(UserDatabase.getInstance()).getByLogin(user.getLogin()).getId())
+                    .collect(Collectors.toMap((p) -> p.getKey(), (p) -> p.getValue()));
+        } finally {
+            lock.readLock().unlock();
+        }
+
+        dao.deleteAllByUser(user);
+
+        lock.writeLock().lock();
+        try {
+            lhm.clear();
+            lhm.putAll(copy);
+        } finally {
+            lock.writeLock().unlock();
+        }
+        return (count - lhm.size()) + " items were deleted";
     }
 
     @Override

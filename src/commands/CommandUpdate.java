@@ -2,6 +2,8 @@ package commands;
 
 import item.SpaceMarine;
 import utils.ValidateInput;
+import utils.dao.SpaceMarineDAO;
+import utils.dataSource.database.UserDatabase;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -29,12 +31,23 @@ public class CommandUpdate extends Command {
 
     @Override
     public String execute() {
+        SpaceMarineDAO dao = new SpaceMarineDAO(UserDatabase.getInstance());
         // Необходимо найти элемент в коллекции по id
         // Здесь будет реализовано полным перебором, впоследствии возможны изменения
         for (Integer key : lhm.keySet()) {
             SpaceMarine value = lhm.get(key);
             if (value.getId() == id) {
-                lhm.put(key, sm);
+                if (value.getOwnerId() != user.getId()) {
+                    return "You can't modify items that do not belong to you";
+                }
+                sm.setOwnerId(user.getId());
+                dao.update(key, sm);
+                lock.writeLock().lock();
+                try {
+                    lhm.put(key, sm);
+                } finally {
+                    lock.writeLock().unlock();
+                }
                 return "Success update";
             }
         }

@@ -30,10 +30,16 @@ public class CommandShow extends Command {
         if (lhm.size() == 0) {
             return "Collection is empty\n";
         }
-        String s = lhm.values().stream()
-                .sorted(Comparator.comparing(SpaceMarine::getName))
-                .map(a -> a.toString() + "\n")
-                .collect(Collectors.joining());
+        String s;
+        lock.readLock().lock();
+        try {
+            s = lhm.values().stream()
+                    .sorted(Comparator.comparing(SpaceMarine::getName))
+                    .map(a -> a.toString() + "\n")
+                    .collect(Collectors.joining());
+        } finally {
+            lock.readLock().unlock();
+        }
         return s;
     }
 

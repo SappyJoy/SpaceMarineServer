@@ -11,12 +11,10 @@ import java.util.Scanner;
  */
 public class CommandSave extends Command {
     Map<Integer, SpaceMarine> lhm;
-    File file;
 
-    public CommandSave(Map<Integer, SpaceMarine> lhm, File file) {
+    public CommandSave(Map<Integer, SpaceMarine> lhm) {
         this();
         this.lhm = lhm;
-        this.file = file;
     }
 
     public CommandSave() {
@@ -26,6 +24,7 @@ public class CommandSave extends Command {
 
     @Override
     public String execute() {
+        /*
         PrintWriter pw = null;
         try {
             pw = new PrintWriter(file);
@@ -46,7 +45,8 @@ public class CommandSave extends Command {
             }
         }
         pw.close();
-        return "";
+        */
+        return "Everything was saved\n";
     }
 
     @Override

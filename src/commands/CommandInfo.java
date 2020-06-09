@@ -33,9 +33,14 @@ public class CommandInfo extends Command {
     public String execute() {
         String typeOfCollection = lhm.getClass().getSimpleName();
         java.time.LocalDateTime creationDate = LocalDateTime.MAX;
-        for (SpaceMarine spaceMarine : lhm.values()) {
-            if (creationDate.compareTo(spaceMarine.getCreationDate()) > 0)
-                creationDate = spaceMarine.getCreationDate();
+        lock.readLock().lock();
+        try {
+            for (SpaceMarine spaceMarine : lhm.values()) {
+                if (creationDate.compareTo(spaceMarine.getCreationDate()) > 0)
+                    creationDate = spaceMarine.getCreationDate();
+            }
+        } finally {
+            lock.readLock().unlock();
         }
         int sizeOfCollection = lhm.size();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy");

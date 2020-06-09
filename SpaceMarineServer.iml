@@ -10,5 +10,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="json-20190722" level="project" />
     <orderEntry type="library" name="libs" level="project" />
+    <orderEntry type="library" name="postgresql-42.2.12" level="project" />
+    <orderEntry type="library" name="javax.mail" level="project" />
   </component>
 </module>

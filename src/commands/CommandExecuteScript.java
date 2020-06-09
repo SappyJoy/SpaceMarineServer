@@ -62,6 +62,7 @@ public class CommandExecuteScript extends Command {
                 break;
 
             Command cmd = commandManager.getCommand(name);
+            cmd.setUser(user);
             if (cmd == null)
                 continue;
 
