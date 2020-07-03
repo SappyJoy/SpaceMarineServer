@@ -27,8 +27,10 @@ public abstract class DataSource {
         try {
             Class.forName("org.postgresql.Driver");
             connection = DriverManager.getConnection(url, user, password);
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             throw new DataSourceException("Error with database connection");
+        } catch (ClassNotFoundException e) {
+            throw new DataSourceException("org.postgresql.Driver is not available");
         }
 
         return connection;

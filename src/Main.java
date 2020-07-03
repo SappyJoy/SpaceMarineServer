@@ -18,18 +18,21 @@ import java.util.*;
  */
 public class Main {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
-        if (args.length < 1) {
-            System.out.println("Syntax: java Main <port-number>");
+        if (args.length < 2) {
+            System.out.println("Syntax: java Main <dbLogin> <dbPassword>");
             System.exit(0);
         }
+        String login = args[0];
+        String password = args[1];
+        UserDatabase.setDatabase(login, password);
 
-        int port = Integer.parseInt(args[0]);
+        int port = 7777;
 
 //        File file = new File("data.json");
         Database database = UserDatabase.getInstance();
         SpaceMarineDAO spaceMarineDAO = new SpaceMarineDAO(database);
         LinkedHashMap<Integer, SpaceMarine> lhm;
-        // добавить элементы из файла в lhm
+//         добавить элементы из файла в lhm
 //        WorkWithJson workWIthJson = new WorkWithJson(file);
 //        lhm = workWIthJson.getLhm();
         lhm = (LinkedHashMap<Integer, SpaceMarine>) spaceMarineDAO.getAll();

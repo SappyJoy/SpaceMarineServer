@@ -58,7 +58,7 @@ public class Server {
     }
 
     private void receive() {
-        byte[] input = new byte[10000];
+        byte[] input = new byte[500000];
         DatagramPacket inputPacket = new DatagramPacket(input, input.length);
 
         try {
@@ -91,9 +91,14 @@ public class Server {
                         cmd = commandManager.getCommand(cmd.getName());
                         cmd.setUser(user);
                         cmd.setParameters(objectInputStream);
-                        System.out.println("Request has been received: " + cmd.getName());
+                        if (!cmd.getName().equals("show")) {
+                            System.out.println("Request has been received: " + cmd.getName());
+                            history.add(cmd.getName());
+
+                        }
                         answer += cmd.execute();
-                        history.add(cmd.getName());
+                    } else {
+                        answer = String.valueOf(user.getId());
                     }
                 } else {
                     answer = "Wrong login or password";
@@ -101,7 +106,7 @@ public class Server {
             } else {
                 answer = ValidateUser.register(user, database);
             }
-            byte[] output = new byte[10000];
+            byte[] output = new byte[500000];
             ByteBuffer buffer = ByteBuffer.wrap(answer.getBytes("UTF-8"));
             output = answer.getBytes("UTF-8");
 
@@ -120,7 +125,7 @@ public class Server {
             DatagramPacket outputPacket = new DatagramPacket(output, output.length, clientAddr, clientPort);
             // System.out.println("Reply has been sent: \n" + new String(output).trim());
             socket.send(outputPacket);
-            System.out.println("Reply has been sent");
+//            System.out.println("Reply has been sent");
         } catch (IOException e) {
             System.out.println("Error in the server send: " + e.getMessage());
             e.printStackTrace();

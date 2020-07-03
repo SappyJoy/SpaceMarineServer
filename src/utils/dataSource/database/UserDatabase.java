@@ -5,18 +5,18 @@ import utils.dataSource.DataSourceException;
 public class UserDatabase extends Database {
     private volatile static UserDatabase database;
 
-    private UserDatabase() throws DataSourceException {
-        super("postgres", "123");
+    private UserDatabase(String login, String password) throws DataSourceException {
+        super(login, password);
     }
 
     public static UserDatabase getInstance() {
         if (database == null) {
-            synchronized (UserDatabase.class) {
-                if (database == null) {
-                    database = new UserDatabase();
-                }
-            }
+            throw new DatabaseException("Database is not created", new Exception());
         }
         return database;
+    }
+
+    public static synchronized void setDatabase(String login, String password) {
+        database = new UserDatabase(login, password);
     }
 }

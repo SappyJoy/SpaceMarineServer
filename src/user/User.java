@@ -1,5 +1,8 @@
 package user;
 
+import utils.dao.UserDAO;
+import utils.dataSource.database.UserDatabase;
+
 import java.io.Serializable;
 
 public class User implements Serializable {
@@ -27,7 +30,8 @@ public class User implements Serializable {
     }
 
     public long getId() {
-        return id;
+        User user = new UserDAO(UserDatabase.getInstance()).getByLogin(login);
+        return user.id;
     }
 
     public void setId(long id) {

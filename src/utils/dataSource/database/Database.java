@@ -56,7 +56,7 @@ public class Database extends DataSource {
         try {
             preparedStatement.executeUpdate();
         } catch (SQLException | DAOException e) {
-            throw new DatabaseException("Error while createion of SpaceMarine table", e);
+            throw new DatabaseException("Error while creation of SpaceMarine table", e);
         } finally {
             closePreparedStatement(preparedStatement);
         }
